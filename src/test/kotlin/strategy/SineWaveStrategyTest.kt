@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName
 import java.security.KeyStore
 import kotlin.test.assertEquals
 
+@DisplayName("Sine Wave Strategy")
 class SineWaveStrategyTest {
 
     @Test
