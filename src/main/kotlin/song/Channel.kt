@@ -29,7 +29,7 @@ class Channel (val waveForm: WaveFormStrategy, val measures: List<Measure>) {
                         samples[offset + i] = noteSamples[i]
                     }
                 }
-                // For rests, the array is already 0.0 so just skip
+                // For rests, the array is already 0.0 so just skip and increment offset
                 offset += numSamples
             }
         }
