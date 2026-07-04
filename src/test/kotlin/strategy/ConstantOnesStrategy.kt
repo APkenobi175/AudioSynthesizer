@@ -1,6 +1,4 @@
-package decorator
-
-import strategy.WaveFormStrategy
+package strategy
 
 // Fake strategy: every sample is 1.0. Makes decorator outputs predictable
 // FOR UNIT TESTS
