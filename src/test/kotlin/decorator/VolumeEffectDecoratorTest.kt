@@ -5,16 +5,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.DisplayName
 
-// Fake strategy: every sample is 1.0. Makes decorator outputs predictable
-class ConstantOnesStrategy : WaveFormStrategy {
-    override fun generate(frequency: Double, sampleRate: Int, numSamples: Int): DoubleArray {
-        val samples = DoubleArray(numSamples)
-        for (n in samples.indices) {
-            samples[n] = 1.0
-        }
-        return samples
-    }
-}
+
 
 class VolumeEffectDecoratorTest {
 
