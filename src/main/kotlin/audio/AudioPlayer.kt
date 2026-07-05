@@ -6,7 +6,7 @@ import javax.sound.sampled.SourceDataLine
 
 class AudioPlayer {
     fun play(samples: DoubleArray, sampleRate: Int) {
-        // Convert -1.0..1.0 doubles to 16-bit little-endian PCM bytes
+        // Convert -1.0..1.0 doubles to 16-bit bytes
         val buffer = ByteArray(samples.size * 2)
         for (i in samples.indices) {
             val pcmValue = (samples[i] * Short.MAX_VALUE).toInt()
@@ -19,7 +19,7 @@ class AudioPlayer {
         line.open(format)
         line.start()
         line.write(buffer, 0, buffer.size)
-        line.drain()   // blocks until playback finishes -- fine for this program
+        line.drain()   // blocks until playback finishes
         line.close()
     }
 }
