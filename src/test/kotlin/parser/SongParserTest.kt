@@ -9,6 +9,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 import org.junit.jupiter.api.DisplayName
+import strategy.SawtoothWaveStrategy
+import strategy.SquareWaveStrategy
+import strategy.WhiteNoiseStrategy
 
 class SongParserTest {
 
@@ -185,5 +188,13 @@ class SongParserTest {
         assertFailsWith<IllegalArgumentException> {
             parseSong("100 4 60\nsin vol\$0.8")
         }
+    }
+
+    @Test
+    @DisplayName("Each waveform name maps to its strategy")
+    fun testWaveformDispatch() {
+        assertTrue(parseSong("100 4 60\nsquare|C4 1|").channels[0].waveForm is SquareWaveStrategy)
+        assertTrue(parseSong("100 4 60\nsaw|C4 1|").channels[0].waveForm is SawtoothWaveStrategy)
+        assertTrue(parseSong("100 4 60\nwhitenoise|C4 1|").channels[0].waveForm is WhiteNoiseStrategy)
     }
 }
