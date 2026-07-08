@@ -34,8 +34,11 @@ class EffectFactory {
             if (numArgs != 3){
                 throw IllegalArgumentException("Expected 3 arguments for ads effect, got $numArgs in line $lineNumber")
             }
+            if (args[0] < 0) throw IllegalArgumentException("Line $lineNumber: ads attackEnd must be >= 0, got ${args[0]}")
+            if (args[1] < args[0]) throw IllegalArgumentException("Line $lineNumber: ads decayEnd (${args[1]}) must be >= attackEnd (${args[0]})")
 
             return ADSEffectDecorator(strategy, args[0], args[1], args[2])
+
         } else if (segments[0] == "tanh"){
             // TANH has 1 argument
             if (numArgs != 1){

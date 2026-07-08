@@ -41,7 +41,7 @@ class SongParserTest {
         assertEquals(2, firstMeasure.notes.size)
         assertTrue(firstMeasure.notes[0].isRest())
         assertEquals(2.0, firstMeasure.notes[0].duration, 1e-9)
-        assertEquals(196.0, firstMeasure.notes[1].frequency!!, 0.01)  // G3
+        assertEquals(196.0, firstMeasure.notes[1].frequencyOrThrow(), 0.01)  // G3
         assertEquals(1.0, firstMeasure.notes[1].duration, 1e-9)
     }
 
@@ -196,5 +196,30 @@ class SongParserTest {
         assertTrue(parseSong("100 4 60\nsquare|C4 1|").channels[0].waveForm is SquareWaveStrategy)
         assertTrue(parseSong("100 4 60\nsaw|C4 1|").channels[0].waveForm is SawtoothWaveStrategy)
         assertTrue(parseSong("100 4 60\nwhitenoise|C4 1|").channels[0].waveForm is WhiteNoiseStrategy)
+    }
+
+    @Test
+    @DisplayName("Interior double bar (empty measure) is rejected")
+    fun testInteriorEmptyMeasure() {
+        val e = assertFailsWith<IllegalArgumentException> {
+            parseSong("100 4 60\nsin||C4 1|")
+        }
+        assertTrue(e.message!!.contains("empty measure"))
+    }
+
+    @Test
+    @DisplayName("Empty measure between real measures is rejected")
+    fun testEmptyMeasureMidLine() {
+        assertFailsWith<IllegalArgumentException> {
+            parseSong("100 4 60\nsin|C4 1||E4 1|")
+        }
+    }
+
+    @Test
+    @DisplayName("Missing settings before first bar is rejected")
+    fun testMissingSettings() {
+        assertFailsWith<IllegalArgumentException> {
+            parseSong("100 4 60\n|C4 1|")
+        }
     }
 }

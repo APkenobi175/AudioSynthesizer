@@ -24,7 +24,7 @@ class Channel (val waveForm: WaveFormStrategy, val measures: List<Measure>) {
                 val numSamples = (note.duration * secondsPerBeat * sampleRate).toInt()
                 // Make sure note is not a rest
                 if (!note.isRest()){
-                    val noteSamples = waveForm.generate(note.frequency!!, sampleRate, numSamples)
+                    val noteSamples = waveForm.generate(note.frequencyOrThrow(), sampleRate, numSamples)
                     for (i in noteSamples.indices){
                         samples[offset + i] = noteSamples[i]
                     }
